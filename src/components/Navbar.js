@@ -12,12 +12,17 @@ const Navbar = ({ setCategory, setLanguage }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (search.trim()) {
-      setCategory(search);
+      setCategory(search); // Set the category based on the search input
       setActiveCategory(""); // Remove active category highlight
     } else {
       setCategory("All"); // Reset to default category when search is cleared
       setActiveCategory("Home"); // Set back to Home when search is empty
     }
+  };
+
+  const handleCategoryClick = (category) => {
+    setCategory(category); // Set the selected category
+    setActiveCategory(category); // Highlight the active category
   };
 
   const categories = ["Home", "Movies", "Politics", "Technology", "Sports", "Science"];
@@ -32,16 +37,15 @@ const Navbar = ({ setCategory, setLanguage }) => {
       <div className="flex items-center gap-4">
         <Image src="/logo.png" alt="Logo" width={80} height={42} priority />
         <select
-  onChange={(e) => setLanguage(e.target.value)}
-  className={`p-2 rounded ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
->
-  {languages.map((lang) => (
-    <option key={lang} value={lang}>
-      {lang.toUpperCase()}
-    </option>
-  ))}
-</select>
-
+          onChange={(e) => setLanguage(e.target.value)}
+          className={`p-2 rounded ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+        >
+          {languages.map((lang) => (
+            <option key={lang} value={lang}>
+              {lang.toUpperCase()}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Center: Navigation Links */}
@@ -49,7 +53,7 @@ const Navbar = ({ setCategory, setLanguage }) => {
         {categories.map((item) => (
           <button
             key={item}
-            onClick={() => setActiveCategory(item)}
+            onClick={() => handleCategoryClick(item)} // Use the new handler for category clicks
             className={`relative text-lg transition duration-200 hover:text-gray-400 ${activeCategory === item ? "font-bold" : ""}`}
           >
             {item}
@@ -60,7 +64,7 @@ const Navbar = ({ setCategory, setLanguage }) => {
 
       {/* Right: Search & Dark Mode Toggle */}
       <div className="flex items-center gap-3">
-        <form onSubmit={(e) => e.preventDefault()} className="flex items-center gap-2">
+        <form onSubmit={handleSearch} className="flex items-center gap-2"> {/* Use handleSearch directly */}
           <input
             type="text"
             placeholder="Search news, topics and more"
