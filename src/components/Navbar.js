@@ -28,8 +28,22 @@ const Navbar = ({ setCategory, setLanguage }) => {
   const categories = ["Home", "Movies", "Politics", "Technology", "Sports", "Science"];
   
   // Language options
-  const languages = ["en", "ar", "de", "es", "fr", "he", "it", "nl", "no", "pt", "ru", "sv", "ud", "zh"];
-
+  const languages = [
+    { code: "en", name: "English" },
+    { code: "ar", name: "العربية" },
+    { code: "de", name: "Deutsch" },
+    { code: "es", name: "Español" },
+    { code: "fr", name: "Français" },
+    { code: "he", name: "עברית" },
+    { code: "it", name: "Italiano" },
+    { code: "nl", name: "Nederlands" },
+    { code: "no", name: "Norsk" },
+    { code: "pt", name: "Português" },
+    { code: "ru", name: "Русский" },
+    { code: "sv", name: "Svenska" },
+    { code: "ud", name: "اردو" },
+    { code: "zh", name: "中文" },
+  ];
   return (
     <nav className={`fixed top-0 w-full ${darkMode ? "bg-gray-900 text-white" : "bg-white text-black"} p-4 flex items-center justify-between z-50 shadow-md`}>
       
@@ -40,9 +54,9 @@ const Navbar = ({ setCategory, setLanguage }) => {
           onChange={(e) => setLanguage(e.target.value)}
           className={`p-2 rounded ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
         >
-          {languages.map((lang) => (
-            <option key={lang} value={lang}>
-              {lang.toUpperCase()}
+          {languages.map(({ code, name }) => (
+            <option key={code} value={code}>
+              {name} 
             </option>
           ))}
         </select>
