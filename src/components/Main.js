@@ -1,11 +1,18 @@
-import { useState } from "react";
-import Home from "./Home";
+import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
+import Home from "./Home";
 
 const Main = () => {
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
-  const [language, setLanguage] = useState("en"); // Default language
+  const [language, setLanguage] = useState(""); // Default language
+
+  useEffect(() => {
+    const lastSearched = localStorage.getItem('lastSearched');
+    if (lastSearched) {
+      setCategory(lastSearched); // Set the last searched category
+    }
+  }, []);
 
   return (
     <div>
