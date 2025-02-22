@@ -1,8 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 
 const Home = ({ category, search, language }) => {
-  const API_KEY = process.env.NEXT_PUBLIC_NEWS_API_KEY;
-
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -14,21 +12,15 @@ const Home = ({ category, search, language }) => {
     setError(null);
 
     try {
-      let query = category || "All";
-      let url = `https://newsapi.org/v2/everything?q=${query}&page=${pageNumber}&pageSize=10&apiKey=${API_KEY}`;
-
-      // Add language parameter if it's not English
-      if (language && language !== "en") {
-        url += `&language=${language}`;
-      }
-
-      const response = await fetch(url);
-
-      if (!response.ok) throw new Error("Failed to fetch news. Please try again later.");
+      // Update the fetch URL to point to the correct API route
+      const response = await fetch(`/api/news?category=${category || "All"}&page=${pageNumber}&language=${language}`);
+      if (!response.ok) throw new Error("Failed to fetch news");
 
       const data = await response.json();
-      if (data.articles.length > 0) {
-        setNews((prevNews) => [...prevNews, ...data.articles]); // Append new articles
+      const articles = data.articles;
+
+      if (articles.length > 0) {
+        setNews((prevNews) => [...prevNews, ...articles]); // Append new articles
         setHasMore(true);
       } else {
         setHasMore(false); // No more articles to load
