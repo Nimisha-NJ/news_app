@@ -1,5 +1,11 @@
-import "@/styles/globals.css";
-
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+import { DarkModeProvider } from '@/components/context/DarkModeContext';
+import '../styles/globals.css';
+function MyApp({ Component, pageProps }) {
+  return (
+    <DarkModeProvider>
+      <Component {...pageProps} />
+    </DarkModeProvider>
+  );
 }
+
+export default MyApp;
